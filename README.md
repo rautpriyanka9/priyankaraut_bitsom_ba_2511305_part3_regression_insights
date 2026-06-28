@@ -165,3 +165,410 @@ This is especially useful when comparing coefficient magnitudes.
 * `monthly_sales`
 
 This feature set captures marketing activity, customer traffic, pricing strategy, staffing, inventory health, competition, customer satisfaction, seasonality, and store characteristics that may influence sales performance.
+
+# Regression Approach
+
+## Objective
+The objective of this analysis is to identify the factors that influence monthly sales and build predictive models using regression analysis.
+
+---
+
+## Data Preparation
+
+Before running regression models, the dataset was prepared using the following steps:
+
+1. Removed duplicate records.
+2. Handled missing values where required.
+3. Verified data types for all variables.
+4. Converted categorical variables into dummy variables.
+5. Ensured all predictor variables were numeric.
+6. Checked for invalid or blank values in regression inputs.
+
+---
+
+## Dummy Variable Creation
+
+Categorical variables cannot be directly used in regression models. Therefore, dummy variables were created.
+
+### Region
+Reference Category: **West**
+
+Dummy variables:
+- Region_North
+- Region_South
+- Region_East
+
+### Store Type
+Reference Category: **Residential**
+
+Dummy variables:
+- Store_Mall
+- Store_HighStreet
+- Store_Airport
+
+---
+
+# Model 1: Simple Linear Regression
+
+## Purpose
+To evaluate the relationship between marketing spend and monthly sales.
+
+### Dependent Variable (Y)
+- Monthly Sales
+
+### Independent Variable (X)
+- Marketing Spend
+
+### Regression Equation
+
+Sales = Intercept + (Marketing Coefficient × Marketing Spend)
+
+Using the regression output:
+
+Sales = 561666.39 + (2.11866 × Marketing Spend)
+
+---
+
+## Results
+
+| Metric | Value |
+|----------|----------|
+| R² | 0.1659 |
+| Adjusted R² | 0.1633 |
+| Standard Error | 94,867.72 |
+| Observations | 319 |
+| Significance F | 3.52E-14 |
+
+### Interpretation
+
+- Marketing spend has a positive impact on sales.
+- For every additional unit spent on marketing, sales increase by approximately 2.12 units.
+- The model explains approximately 16.6% of the variation in sales.
+- Although statistically significant, the model has limited explanatory power.
+
+---
+
+# Model 2: Multiple Linear Regression
+
+## Purpose
+
+To predict monthly sales using multiple business drivers simultaneously.
+
+### Dependent Variable (Y)
+
+- Monthly Sales
+
+### Independent Variables (X)
+
+- Marketing Spend
+- Footfall
+- Average Discount Percentage
+- Staff Count
+- Inventory Availability Percentage
+- Competitor Distance
+- Holiday Flag
+- Customer Rating
+- Region_North
+- Region_South
+- Region_East
+- Store_Mall
+- Store_HighStreet
+- Store_Airport
+
+---
+
+## Results
+
+| Metric | Value |
+|----------|----------|
+| R² | 0.8570 |
+| Adjusted R² | 0.8504 |
+| Standard Error | 40,133.89 |
+| Observations | 320 |
+| Significance F | 1.25E-119 |
+
+### Interpretation
+
+- The model explains approximately 85.7% of sales variation.
+- Multiple business factors jointly influence sales performance.
+- Prediction accuracy improved substantially compared with the simple regression model.
+- The model is highly statistically significant.
+
+---
+
+# Model Comparison
+
+| Metric | Simple Regression | Multiple Regression |
+|----------|----------|----------|
+| R² | 0.1659 | 0.8570 |
+| Adjusted R² | 0.1633 | 0.8504 |
+| Standard Error | 94,867.72 | 40,133.89 |
+| Observations | 319 | 320 |
+| Significance F | 3.52E-14 | 1.25E-119 |
+
+---
+
+## Conclusion
+
+The Multiple Regression model outperforms the Simple Regression model across all evaluation metrics.
+
+Key findings:
+
+- Higher R² indicates stronger explanatory power.
+- Lower standard error indicates better prediction accuracy.
+- Multiple operational and market variables significantly affect sales.
+- The Multiple Regression model is recommended for forecasting monthly sales and supporting business decisions.
+
+---
+
+# Task 4: Simple Regression Models
+
+## Model 1: Monthly Sales vs Marketing Spend
+
+### Regression Equation
+
+Monthly Sales = 561666.39 + (2.1187 × Marketing Spend)
+
+### Results
+
+| Metric | Value |
+|----------|----------|
+| R-squared | 0.1659 |
+| Coefficient | 2.1187 |
+| P-value | 3.52E-14 |
+| Observations | 319 |
+
+### Business Interpretation
+
+The coefficient of 2.1187 indicates that for every additional ₹1 spent on marketing, monthly sales increase by approximately ₹2.12 on average.
+
+The R-squared value of 0.1659 means that marketing spend explains about 16.6% of the variation in monthly sales.
+
+The very small p-value (3.52E-14) indicates that marketing spend is a statistically significant predictor of sales.
+
+### Usefulness
+
+✅ Useful predictor
+
+Marketing spend has a statistically significant positive impact on sales, although additional factors are needed to explain most sales variation.
+
+---
+
+## Model 2: Monthly Sales vs Footfall
+
+### Regression Equation
+
+Monthly Sales = 446966.83 + (35.6298 × Footfall)
+
+### Results
+
+| Metric | Value |
+|----------|----------|
+| R-squared | 0.7369 |
+| Coefficient | 35.6298 |
+| P-value | 6.52E-94 |
+| Observations | 319 |
+
+### Business Interpretation
+
+The coefficient of 35.6298 indicates that each additional customer visit (footfall) is associated with an increase of approximately ₹35.63 in monthly sales.
+
+The R-squared value of 0.7369 means that footfall explains about 73.7% of the variation in monthly sales.
+
+The extremely small p-value (6.52E-94) indicates that footfall is a highly significant predictor of sales.
+
+### Usefulness
+
+✅ Very useful predictor
+
+Footfall is a strong driver of sales and explains a large proportion of sales variation. It appears to be a much stronger predictor than marketing spend in this dataset.
+
+---
+
+## Comparison of Simple Regression Models
+
+| Variable | R² | Coefficient | P-value | Useful? |
+|------------|---------|------------|------------|---------|
+| Marketing Spend | 0.1659 | 2.1187 | 3.52E-14 | Yes |
+| Footfall | 0.7369 | 35.6298 | 6.52E-94 | Yes (Strongest) |
+
+### Key Insight
+
+Among the simple regression models tested, Footfall provides substantially higher explanatory power (R² = 73.7%) than Marketing Spend (R² = 16.6%). This suggests that customer traffic is the primary driver of monthly sales performance.
+
+# Multiple Regression Model
+
+## Model Specification
+
+A multiple linear regression model was developed to predict **monthly_sales** using operational, marketing, customer, and location-related variables.
+
+### Dependent Variable
+
+* monthly_sales
+
+### Independent Variables
+
+* marketing_spend
+* footfall
+* avg_discount_pct
+* staff_count
+* inventory_availability_pct
+* competitor_distance_km
+* holiday_flag
+* customer_rating
+* Region_North
+* Region_South
+* Region_East
+* Store_Mall
+* Store_HighStreet
+* Store_Airport
+
+---
+
+## Regression Equation
+
+Monthly Sales = 66915.47
+
+* (1.21 × marketing_spend)
+
+* (27.34 × footfall)
+
+- (41243.15 × avg_discount_pct)
+
+* (3508.40 × staff_count)
+
+* (3062.21 × inventory_availability_pct)
+
+- (3438.11 × competitor_distance_km)
+
+* (15157.29 × holiday_flag)
+
+* (12509.46 × customer_rating)
+
+- (15342.71 × Region_North)
+
+- (4201.85 × Region_South)
+
+- (25291.42 × Region_East)
+
+* (32832.85 × Store_Mall)
+
+* (20219.26 × Store_HighStreet)
+
+* (44695.09 × Store_Airport)
+
+---
+
+## Model Performance
+
+| Metric             | Value     |
+| ------------------ | --------- |
+| R-Squared          | 0.8570    |
+| Adjusted R-Squared | 0.8504    |
+| Standard Error     | 40,133.89 |
+| Observations       | 320       |
+| Significance F     | 1.25E-119 |
+
+### Interpretation
+
+The model explains approximately **85.7% of the variation in monthly sales**, indicating excellent predictive performance. The extremely low Significance F value shows that the model is statistically significant overall.
+
+---
+
+## Interpretation of Key Variables
+
+### Marketing Spend
+
+* Coefficient: 1.21
+* P-value: 1.06E-21
+
+Every additional ₹1 spent on marketing is associated with an increase of approximately ₹1.21 in monthly sales, holding all other variables constant.
+
+### Footfall
+
+* Coefficient: 27.34
+* P-value: 6.55E-27
+
+Each additional customer visit is associated with approximately ₹27.34 higher monthly sales.
+
+### Staff Count
+
+* Coefficient: 3,508.40
+* P-value: 0.0027
+
+Stores with more staff generally generate higher sales.
+
+### Inventory Availability
+
+* Coefficient: 3,062.21
+* P-value: 5.13E-12
+
+Higher inventory availability positively impacts sales by reducing stock-outs.
+
+### Customer Rating
+
+* Coefficient: 12,509.46
+* P-value: 0.0052
+
+Higher customer satisfaction is associated with higher sales performance.
+
+### Holiday Flag
+
+* Coefficient: 15,157.29
+* P-value: 0.014
+
+Sales are significantly higher during holiday periods.
+
+---
+
+## Dummy Variable Interpretation
+
+### Region Variables
+
+Reference Category: **West**
+
+| Variable     | Coefficient | Interpretation                    |
+| ------------ | ----------- | --------------------------------- |
+| Region_North | -15,342.71  | Lower sales than West             |
+| Region_South | -4,201.85   | Similar to West (not significant) |
+| Region_East  | -25,291.42  | Lower sales than West             |
+
+### Store Type Variables
+
+Reference Category: **Residential**
+
+| Variable         | Coefficient | Interpretation                               |
+| ---------------- | ----------- | -------------------------------------------- |
+| Store_Mall       | 32,832.85   | Higher sales than Residential                |
+| Store_HighStreet | 20,219.26   | Higher sales than Residential                |
+| Store_Airport    | 44,695.09   | Highest sales uplift compared to Residential |
+
+---
+
+## Statistically Weak Variables
+
+| Variable         | P-value | Comment                       |
+| ---------------- | ------- | ----------------------------- |
+| avg_discount_pct | 0.224   | Not statistically significant |
+| Region_South     | 0.538   | Not statistically significant |
+
+These variables should be interpreted cautiously because there is insufficient statistical evidence that they influence monthly sales.
+
+---
+
+## Key Business Insights
+
+1. Footfall is the strongest predictor of sales.
+2. Marketing spend has a significant positive impact on revenue.
+3. Maintaining inventory availability is critical for maximizing sales.
+4. Better customer ratings are associated with higher store performance.
+5. Airport and Mall stores outperform Residential stores.
+6. Holiday periods significantly increase sales.
+7. Discount levels do not appear to have a statistically significant effect after controlling for other variables.
+
+---
+
+## Conclusion
+
+The multiple regression model provides a strong explanation of monthly sales performance with an R-squared of 85.7%. Footfall, marketing spend, inventory availability, customer ratings, staffing levels, holidays, and store type are important drivers of sales and should be prioritized in business decision-making.
+
